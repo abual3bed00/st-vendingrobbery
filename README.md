@@ -1,3 +1,14 @@
+
+
+<img width="91" height="74" alt="image4" src="https://github.com/user-attachments/assets/4873c143-21f1-4d0a-9b1c-a6ccc1ae0d1e" />
+<img width="358" height="510" alt="image3" src="https://github.com/user-attachments/assets/3bab6ee2-d152-4bc4-9335-861ee9992ec1" />
+<img width="221" height="148" alt="image2" src="https://github.com/user-attachments/assets/d6a5beca-0574-4888-8d24-7c088e7624c1" />
+<img width="389" height="421" alt="image1" src="https://github.com/user-attachments/assets/f22b7be3-3add-43db-a377-698f8452ab7d" />
+<img width="567" height="604" alt="image" src="https://github.com/user-attachments/assets/22c8f469-0afb-49d1-82b4-f27303f5528d" />
+
+
+
+
 # Vending Machine Robbery Script (QBCore)
 
 # Author By "ii_abual3bed"
@@ -109,5 +120,6 @@ A script that allows players to rob vending machines in a QBCore server using el
 - Parameters can be adjusted according to server management preferences
 - Integrates with core QBCore systems
 - Supports police notifications and blips
+
 
 This script adds interactive content for players with a complete system of rewards and risks!
