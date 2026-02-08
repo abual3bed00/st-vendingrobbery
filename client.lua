@@ -1,6 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local cooldowns = {}
-
+-- موديلات الات البيع 
 local vendingModels = {
     `prop_vend_soda_01`,
     `prop_vend_coffe_01`,
@@ -20,7 +20,6 @@ for _, model in pairs(vendingModels) do
                         return
                     end
 
-                    -- نطلب تحكم الشبكة على الكيان
                     NetworkRequestControlOfEntity(entity)
                     local timeout = 0
                     while not NetworkHasControlOfEntity(entity) and timeout < 1000 do
@@ -34,7 +33,7 @@ for _, model in pairs(vendingModels) do
                     end
 
                     local now = GetGameTimer()
-                    local entityId = entity -- نستخدم رقم entity نفسه كمفتاح للكولداون
+                    local entityId = entity 
 
                     if cooldowns[entityId] and now - cooldowns[entityId] < 300000 then -- 300000 ms = 5 دقائق
                         QBCore.Functions.Notify("You need to wait before robbing this machine again.", "error")
@@ -95,18 +94,20 @@ RegisterNetEvent('vending:minigame', function()
     exports['st-mastermind']:SetTimer(60)
     exports['st-mastermind']:StartMiniGame()
 
-    -- اسمع على النتيجة
     AddEventHandler("st-mastermind:finished", function(success)
         print(">>> MiniGame finished, success =", success)
         ClearPedTasks(PlayerPedId())
         if success then
-            print("Hack succeeded ✅")
+            --اذا نجح التهكير
+            print("Hack succeeded")
             TriggerServerEvent("vending:reward")
         else
-            print("Hack failed ❌")
+                    --اذا فشل 
+            print("Hack failed")
             QBCore.Functions.Notify("You failed the hack!", "error")
         end
     end)
 end)
+
 
 
