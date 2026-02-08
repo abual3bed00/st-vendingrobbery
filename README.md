@@ -14,7 +14,7 @@
 # Vending Machine Robbery Script (QBCore)
 
 # Author By "ii_abual3bed"
-# Shadow Store discord ["https://discord.gg/7c2gZqD98A"]
+# Shadow Store discord ["https://discord.gg/HCskVYZPtB"]
 
 ## 📋 Overview
 A script that allows players to rob vending machines in a QBCore server using electronic tools, featuring a complete system of challenges and risks.
@@ -125,4 +125,5 @@ A script that allows players to rob vending machines in a QBCore server using el
 
 
 This script adds interactive content for players with a complete system of rewards and risks!
+
 
