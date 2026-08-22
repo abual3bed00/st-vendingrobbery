@@ -1,3 +1,5 @@
+server_script '@ElectronAC/src/include/server.lua'
+client_script '@ElectronAC/src/include/client.lua'
 fx_version 'cerulean'
 game 'gta5'
 
@@ -17,3 +19,12 @@ client_scripts {
 server_scripts {
     'server.lua',
 }
+
+dependencies {
+    'qb-core',
+    'qb-target',
+    'progressbar',
+    'st-mastermind',
+    'cd_dispatch'
+}
+
