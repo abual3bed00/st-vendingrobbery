@@ -1,129 +1,129 @@
+# ST Vending Robbery
 
-<img width="567" height="604" alt="image" src="https://github.com/user-attachments/assets/22c8f469-0afb-49d1-82b4-f27303f5528d" />
-<img width="389" height="421" alt="image1" src="https://github.com/user-attachments/assets/f22b7be3-3add-43db-a377-698f8452ab7d" />
-<img width="358" height="510" alt="image3" src="https://github.com/user-attachments/assets/3bab6ee2-d152-4bc4-9335-861ee9992ec1" />
-<img width="221" height="148" alt="image2" src="https://github.com/user-attachments/assets/d6a5beca-0574-4888-8d24-7c088e7624c1" />
-<img width="91" height="74" alt="image4" src="https://github.com/user-attachments/assets/4873c143-21f1-4d0a-9b1c-a6ccc1ae0d1e" />
+A secure and configurable vending-machine robbery resource for FiveM servers running QBCore. Players use an electronic kit, complete the ST Mastermind minigame, receive configurable rewards, and may trigger a police dispatch alert.
 
+## Preview
 
+<img width="567" height="604" alt="Vending robbery interaction" src="https://github.com/user-attachments/assets/22c8f469-0afb-49d1-82b4-f27303f5528d" />
+<img width="389" height="421" alt="Vending robbery progress" src="https://github.com/user-attachments/assets/f22b7be3-3add-43db-a377-698f8452ab7d" />
+<img width="358" height="510" alt="Vending robbery minigame" src="https://github.com/user-attachments/assets/3bab6ee2-d152-4bc4-9335-861ee9992ec1" />
+<img width="221" height="148" alt="Vending robbery result" src="https://github.com/user-attachments/assets/d6a5beca-0574-4888-8d24-7c088e7624c1" />
 
+## Author and Support
 
+- Author: `ii_abual3bed | stdev`
+- Discord: https://discord.gg/HCskVYZPtB
 
+## Features
 
+- Interaction with configured vending-machine models through `qb-target`
+- Configurable required item, progress duration, cooldown, rewards, and minigame difficulty
+- Integration with `st-mastermind`
+- Optional delayed police alerts through `cd_dispatch`
+- Per-machine robbery cooldowns
+- Electronic-kit usage counter and configurable burn chance
+- Server-authoritative robbery sessions and reward validation
+- Distance, model, entity, timing, token, timeout, and rate-limit checks
+- Automatic cancellation when the player moves too far away or the resource stops
 
-# Vending Machine Robbery Script (QBCore)
+## Dependencies
 
-# Author By "ii_abual3bed"
-# Shadow Store discord ["https://discord.gg/HCskVYZPtB"]
+- `qb-core`
+- `qb-target`
+- `progressbar`
+- [`st-mastermind`](https://github.com/abual3bed00/st-mastermind)
+- `cd_dispatch` when dispatch alerts are enabled
 
-## 📋 Overview
-A script that allows players to rob vending machines in a QBCore server using electronic tools, featuring a complete system of challenges and risks.
+The included `fxmanifest.lua` also contains ElectronAC include lines. Remove those two lines if your server does not use ElectronAC.
 
----
+## Required Items
 
-## 🎯 Prerequisites
+The default configuration expects these QBCore shared items:
 
-### Required Scripts:
-1. **QBCore Framework** - Core framework
-2. **qb-target** - Interaction system with objects
-3. **st-mastermind** ["https://github.com/abual3bed00/st-mastermind"] - Minigame script for hacking
-4. **cd_dispatch** - Police notification system (optional)
+- `electronickit`: required to start the robbery
+- `goldcoins`: configurable reward
+- `silvercoins`: configurable reward
 
-### Required Items:
-- **Electronic Kit** - Electronic tool for hacking
+Change the item names in `config.lua` if your server uses different names.
 
----
+## Installation
 
-## ⚙️ How It Works
+1. Copy `st-vendingrobbery` into your server resources directory.
+2. Install and start all required dependencies.
+3. Add the required items to your QBCore shared items.
+4. Review and adjust `config.lua`.
+5. Add `ensure st-vendingrobbery` to `server.cfg` after its dependencies.
+6. Restart the server.
 
-### 1. Starting the Robbery
-- Player interacts with a vending machine using **qb-target**
-- "Rob Vending Machine" option appears
-- Player must have an **Electronic Kit**
+Example start order:
 
-### 2. Hacking Process
-- Progress bar for 5 seconds with animation
-- Minigame using **st-mastermind**:
-  - 6 attempts
-  - 60 seconds time limit
-- On success: receives rewards
-- On failure: loses the attempt
+```cfg
+ensure qb-core
+ensure qb-target
+ensure progressbar
+ensure st-mastermind
+ensure cd_dispatch
+ensure st-vendingrobbery
+```
 
-### 3. Police Notification
-- After 5 seconds from starting the robbery
-- Notification sent to police department including:
-  - Location of the incident
-  - Player's gender
-  - Blip for 5 minutes
+## Default Configuration
 
----
+### General
 
-## 🎁 Reward System
+| Setting | Default | Description |
+| --- | ---: | --- |
+| `Config.RequiredItem` | `electronickit` | Item required to begin a robbery |
+| `Config.CooldownSec` | `300` | Cooldown for each vending machine |
+| `Config.ProgressTime` | `5000` | Initial progress duration in milliseconds |
 
-### Basic Rewards:
-- **Gold Coins**: 1 to 3 pieces
-- **Silver Coins**: 2 to 5 pieces
+`Config.VendingModels` contains the vending-machine models that can be targeted and validated by the server.
 
-### Tool Risk System:
-- After **3 uses** of the electronic tool
-- **30% chance** for the tool to burn and be lost
-- Counter resets after burning
+### Minigame
 
----
+| Setting | Default | Description |
+| --- | ---: | --- |
+| `Config.Minigame.Attempts` | `6` | Maximum Mastermind attempts |
+| `Config.Minigame.Timer` | `60` | Minigame time limit in seconds |
 
-## ⚠️ Security Features
+### Security
 
-### 1. Anti-Exploit:
-- 5-minute cooldown per machine
-- Entity control to prevent errors
+| Setting | Default | Description |
+| --- | ---: | --- |
+| `InteractDistance` | `3.0` | Maximum distance when starting |
+| `RewardDistance` | `4.0` | Maximum distance when claiming a reward |
+| `SessionTimeoutSec` | `90` | Lifetime of a robbery session |
+| `StartRateLimitSec` | `2` | Minimum delay between start requests |
+| `MinRewardDelaySec` | `5` | Minimum valid delay before claiming rewards |
 
-### 2. Balanced System:
-- Chance of losing tools
-- Police notifications
-- Minigame difficulty
+### Rewards
 
-### 3. Performance Tracking:
-- Usage counter per player
-- Data deletion when player disconnects
+The default successful robbery reward ranges are:
 
----
+- `goldcoins`: 2–100
+- `silvercoins`: 5–200
 
-## 🔧 Setup and Installation
+Reward items and ranges are configured in `Config.Rewards`.
 
-### Basic Steps:
-1. Add the script to the resources folder
-2. Adjust configuration as desired
-3. Ensure required scripts are installed
-4. Add items (Electronic Kit) to the database
+### Electronic Kit Risk
 
-### Customization:
-- Modify rewards in `Config.Rewards`
-- Change burn chance in `Config.ElectronicKit`
-- Adjust cooldown time in the code
+By default, after every three successful uses there is a 30% chance that the electronic kit is removed. Configure this with:
 
----
+- `Config.ElectronicKit.UsesBeforeChance`
+- `Config.ElectronicKit.BurnChance`
 
-## 📊 Process Example
+### Dispatch
 
-1. ➡️ Player finds a vending machine
-2. 🎯 Interacts with it using QB-Target
-3. 🔧 Uses Electronic Kit
-4. ⏳ Waits 5 seconds with animation
-5. 🎮 Plays hacking Minigame
-6. ✅ On success: receives coins
-7. 🚨 Police automatically notified
-8. 🔥 Chance of tool burning after 3 uses
+`Config.Dispatch` controls whether alerts are enabled, their random delay, cooldown, target job, message, sound, and blip settings. Set `Config.Dispatch.Enabled = false` to disable dispatch alerts.
 
----
+## Robbery Flow
 
-## 💡 Important Notes
+1. The player targets a supported vending machine.
+2. The server validates the player, entity, model, distance, item, cooldown, and request rate.
+3. The progress animation starts and a delayed dispatch alert is armed.
+4. `st-mastermind` opens with the configured attempts and timer.
+5. A successful result is validated again by the server.
+6. Rewards are granted, the machine cooldown starts, and the electronic-kit risk is processed.
 
-- Script designed to be balanced and prevent exploitation
-- Parameters can be adjusted according to server management preferences
-- Integrates with core QBCore systems
-- Supports police notifications and blips
+## License
 
-
-This script adds interactive content for players with a complete system of rewards and risks!
-
-
+MIT. See `LICENSE`.
